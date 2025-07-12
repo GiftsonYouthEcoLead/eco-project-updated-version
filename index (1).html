@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Giftson's Eco Project 🌱</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+<style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1500&q=80') center/cover;
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      background: #2f855a;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      color: white;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+    }
+    nav a:hover {
+      background-color: #276749;
+      border-radius: 5px;
+    }
+    .section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      color: #2f855a;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .blog article {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .team-member {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .dark-mode {
+      background-color: #1a202c;
+      color: white;
+    }
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #2f855a;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: none;
+    }
+    .newsletter input[type="email"] {
+      padding: 10px;
+      width: 60%;
+      margin-right: 10px;
+    }
+    .newsletter button {
+      padding: 10px 20px;
+      background: #2f855a;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .donate-box {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .donate-box button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #38a169;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    footer {
+      background: #2f855a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  
+header h1 {
+  color: black;
+  font-weight: bold;
+}
+
+</style>
+<style>
+  .lang-switch {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 999;
+  }
+  .lang-switch button {
+    margin: 2px;
+    padding: 5px 10px;
+    background: #2f855a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  .mobile-nav-toggle {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 12px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .mobile-nav-toggle {
+      display: block;
+    }
+    nav {
+      flex-direction: column;
+      display: none;
+    }
+    nav.active {
+      display: flex;
+    }
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    padding: 30px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+  .modal input, .modal textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+  }
+  .modal button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #2f855a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ecoQuotes = [
+      "The Earth is what we all have in common. — Wendell Berry",
+      "We do not inherit the Earth from our ancestors; we borrow it from our children. — Native American Proverb",
+      "The greatest threat to our planet is the belief that someone else will save it. — Robert Swan",
+      "Small acts, when multiplied by millions of people, can transform the world. — Howard Zinn",
+      "Plant a tree today, for a better tomorrow. — Unknown",
+      "If you think you are too small to make a difference, try sleeping with a mosquito. — African Proverb",
+      "Nature does not hurry, yet everything is accomplished. — Lao Tzu",
+      "What we do to the forests of the world is but a mirror reflection of what we do to ourselves and one another. — Mahatma Gandhi",
+      "When the last tree is cut down, the last fish eaten, and the last stream poisoned, you will realize that you cannot eat money. — Cree Proverb",
+      "The future will be green, or not at all. — Jonathon Porritt"
+    ];
+    let currentQuote = 0;
+    document.getElementById("quote-text").innerText = ecoQuotes[currentQuote];
+    setInterval(() => {
+      currentQuote = (currentQuote + 1) % ecoQuotes.length;
+      document.getElementById("quote-text").innerText = ecoQuotes[currentQuote];
+    }, 5000);
+  });
+</script>
+<div class="lang-switch">
+<button onclick="toggleLanguage('en')">EN</button>
+<button onclick="toggleLanguage('sw')">SW</button>
+</div>
+<div class="mobile-nav-toggle" onclick="toggleMobileNav()">☰</div>
+<!-- Clean center-aligned nav -->
+<nav style="background: #fff; padding: 10px 0; text-align: center; border-bottom: 1px solid #eee;">
+<a href="#gallery" style="color: black; text-decoration: none; margin: 0 8px;">Gallery</a> |
+  <a href="#blog" style="color: black; text-decoration: none; margin: 0 8px;">Blog</a> |
+  <a href="#video" style="color: black; text-decoration: none; margin: 0 8px;">Video</a> |
+  <a href="#events" style="color: black; text-decoration: none; margin: 0 8px;">Events</a> |
+  <a href="#team" style="color: black; text-decoration: none; margin: 0 8px;">Team</a>
+</nav>
+<!-- Logo Header -->
+<div style="background: #fff7ed; padding: 16px; text-align: center;">
+<img alt="Youth Eco Lead Logo" src="https://i.postimg.cc/66FBxYnZ/1000001079.png" style="max-width: 180px; height: auto;"/>
+<p style="text-align:center; color:black; font-weight:bold; margin: 10px;">Together for a greener tomorrow</p>
+</div><nav style="position: sticky; top: 0; background: #2f855a; display: flex; justify-content: space-around; padding: 10px;">
+<a href="#impact" style="color: white; text-decoration: none;">Impact</a>
+<a href="#gallery" style="color: white; text-decoration: none;">Gallery</a>
+<a href="#blog" style="color: white; text-decoration: none;">Blog</a>
+<a href="#video" style="color: white; text-decoration: none;">Video</a>
+<a href="#events" style="color: white; text-decoration: none;">Events</a>
+<a href="#team" style="color: white; text-decoration: none;">Team</a>
+</nav>
+<div data-aos="fade-up" style="text-align:center; margin-top: 20px;">
+<button onclick="document.getElementById('donate').scrollIntoView({behavior:'smooth'})" style="padding: 10px 20px; margin: 5px; background-color: #38a169; color: white; border: none; border-radius: 5px; cursor: pointer;">🌱 Donate Now</button>
+<button onclick="toggleModal('volunteerModal')" style="padding: 10px 20px; margin: 5px; background-color: #2b6cb0; color: white; border: none; border-radius: 5px; cursor: pointer;">🙋 Join as a Volunteer</button>
+<button onclick="document.querySelector('.newsletter').scrollIntoView({behavior:'smooth'})" style="padding: 10px 20px; margin: 5px; background-color: #d69e2e; color: white; border: none; border-radius: 5px; cursor: pointer;">📬 Subscribe to Newsletter</button>
+<button onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})" style="padding: 10px 20px; margin: 5px; background-color: #805ad5; color: white; border: none; border-radius: 5px; cursor: pointer;">📸 View Our Projects</button>
+</div>
+<div data-aos="fade-up" style="text-align:center; margin-top: 30px;">
+<h2 style="color: #2f855a;">🌿 YOUTH ECO LEAD</h2>
+</div>
+<div class="section" data-aos="fade-up" id="project">
+<h2>🌍 Our Project</h2>
+<p><strong>Mission:</strong> To empower youth to lead sustainable environmental actions, foster community awareness, and create greener, cleaner spaces for current and future generations.</p>
+<p><strong>Vision:</strong> A world where young people are the driving force of environmental transformation, ensuring a healthy planet for all.</p>
+<blockquote style="background-color: #f0fff4; padding: 20px; margin: 20px auto; border-left: 5px solid #38a169; font-style: italic; max-width: 800px;">
+<h3 style="color: #2f855a;">Youth Eco Lead Reflection</h3>
+<p>“We are not just planting trees.<br/>
+  We are planting values, identity, and a future that refuses to wither.”</p>
+</blockquote>
+</div>
+<div class="section" data-aos="fade-up" id="impact">
+<h2>🌱 Our Impact</h2>
+<p>🌳 Trees Planted: <strong>250</strong></p>
+<p>👥 Volunteers Joined: <strong>85</strong></p>
+<p>📍 Areas Cleaned: <strong>15</strong></p>
+</div>
+<div class="section" data-aos="fade-right" id="gallery">
+<h2>📸 Project Gallery</h2>
+<div class="gallery-grid"><img alt="Real Eco Activity - Tree planting" src="https://i.postimg.cc/76kXqVzt/1000001136.jpg"/></div>
+</div>
+<div class="section" data-aos="fade-up" id="blog">
+<h2>📰 Blog &amp; News</h2>
+<div class="blog">
+<article>
+<h3>Why Trees Matter</h3>
+<p>Trees improve air quality, reduce climate change, and support biodiversity.</p>
+</article>
+<article>
+<h3>Beach Cleanup 2025</h3>
+<p>We cleared 12 bags of plastic and glass from our coastlines!</p>
+</article>
+<article>
+<h3>Volunteer Spotlight</h3>
+<p>Meet Amina — a 17-year-old hero leading school recycling efforts.</p>
+</article>
+</div>
+</div>
+<div class="section" data-aos="zoom-in" id="video">
+<h2>🎬 Youth in Action</h2>
+<iframe allowfullscreen="" frameborder="0" src="https://www.youtube.com/embed/9V7mMaZfFz4" title="Youths Greening the World"></iframe>
+</div>
+<div class="section" data-aos="fade-left" id="events">
+<h2>🌿 Our Youth Eco Lead Events</h2>
+<div class="event-card">
+<h3>1. 🌳 "Adopt-a-Tree" Campaign</h3>
+<ul>
+<li>Youth pledge to plant and care for a tree at school/home/community.</li>
+<li>Give each tree a name and track growth.</li>
+<li>Great for visibility and donor reporting.</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>2. 🧹 Green Clean-Up Drive</h3>
+<ul>
+<li>Host monthly cleanups in towns, riversides, and markets.</li>
+<li>Partner with local government or NEMA.</li>
+<li>Add youth music, banners, and giveaways to make it fun!</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>3. ♻️ Trash to Treasure Workshop</h3>
+<ul>
+<li>Train youth to turn plastic, cans, and paper into usable art/products.</li>
+<li>Invite local artisans or crafters to co-lead.</li>
+<li>Sell or donate outputs.</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>4. 📚 School Eco-Education Days</h3>
+<ul>
+<li>Visit schools with fun eco quizzes, games, and talks.</li>
+<li>Include tree planting, competitions, and storytelling.</li>
+<li>Reward best “Green Ambassadors.”</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>5. 📅 Eco Challenge Week</h3>
+<ul>
+<li>Day 1: Carry your water bottle</li>
+<li>Day 2: No plastic</li>
+<li>Day 3: Plant something</li>
+<li>Day 4: Walk or cycle only</li>
+<li>Day 5: Share an eco tip on social media</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>6. 🎥 "Youths Greening the World" Film Night</h3>
+<ul>
+<li>Outdoor or school-based screening of documentaries or local eco films.</li>
+<li>Use it to raise awareness or raise donations.</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>7. 🧪 Green Innovation Pitch Day</h3>
+<ul>
+<li>Let youth pitch eco-solutions (water harvesting, energy, waste).</li>
+<li>Invite donors and judges.</li>
+<li>Offer starter seed funding to winners.</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>8. 📦 Eco Donation Drive</h3>
+<ul>
+<li>Collect used clothes, shoes, books for reuse/donation.</li>
+<li>Combine with recycling efforts.</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>9. 🏞️ Nature Hike &amp; Talk</h3>
+<ul>
+<li>Take youths on a forest walk or nature trail.</li>
+<li>Invite an ecologist to teach tree/plant identification.</li>
+<li>End with a reflection circle or picnic.</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+<div class="event-card">
+<h3>10. 🛠️ Build an Eco Garden</h3>
+<ul>
+<li>Set up a vegetable garden at a school or community center.</li>
+<li>Teach composting, drip irrigation, mulching.</li>
+<li>Involve parents and local farmers.</li>
+</ul>
+<a class="register-btn" href="#volunteer-form" style="display:inline-block;margin-top:10px;padding:8px 16px;background-color:#38a169;color:white;border-radius:5px;text-decoration:none;">Register</a>
+</div>
+</div>
+<div class="section" data-aos="flip-up" id="team">
+<h2>👥 Meet Our Team</h2>
+<div class="team-member"><h3>Mr Samson Ambenje</h3><p>Director</p></div><div class="team-member"><h3>Giftson Lewis Situma</h3><p>Team Leader</p></div><div class="team-member"><h3>George Omondi</h3><p>Project Coordinator</p></div><div class="team-member"><h3>Jacinta Wayua</h3><p>Social Media Coordinator</p></div><div class="team-member"><h3>Miss Anne Kariuki</h3><p>Communications</p></div><div class="team-member"><h3>Juma Munga</h3><p>Mobilizer</p></div></div>
+<div class="section" data-aos="fade-up" id="donate">
+<h2>💸 Support Our Mission</h2>
+<div class="donate-box">
+<p><strong>M-Pesa Paybill:</strong> 0796 350 613</p>
+<p><strong>Account Name:</strong> Giftson Situma</p>
+<button onclick="alert('Use M-Pesa Paybill 0796 350 613 – Account: Giftson Situma')">Donate Now</button>
+</div>
+</div>
+<div class="section newsletter" data-aos="fade-up">
+<h2>📬 Join Our Newsletter</h2>
+<p>Stay updated on our green actions, events, and success stories.</p>
+<form onsubmit="event.preventDefault(); alert('Thank you for subscribing!')">
+<input placeholder="Enter your email" required="" type="email"/>
+<button type="submit">Subscribe</button>
+</form>
+</div>
+<div style="text-align:center; margin: 30px;"><button onclick="toggleModal('contactModal')" style="padding: 10px 20px; background: #319795; color: white; border: none; border-radius: 5px;">💬 Contact Us</button></div>
+<div class="section" data-aos="fade-up" id="partners">
+<h2>🤝 Our Partners</h2>
+<ul>
+<li>🌐 National Government of Kenya</li>
+<li>🏛️ County Government of Machakos</li>
+<li>🌿 National Environmental Management Authority (NEMA) of Kenya</li>
+<li>🇺🇳 United Nations Environment Programme (UNEP)</li>
+<li>🌲 The Kenya Forest Service (KFS)</li>
+<li>💚 Green Belt Movement</li>
+</ul>
+</div>
+<footer>
+<p>© 2025 Giftson's Eco Project 🌍 | Made with ❤️ in Kenya</p>
+<button onclick="document.body.classList.toggle('dark-mode')">🌗 Toggle Dark Mode</button>
+</footer>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+  const scrollBtn = document.createElement('button');
+  scrollBtn.innerText = '⬆';
+  scrollBtn.className = 'scroll-top';
+  scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.body.appendChild(scrollBtn);
+  window.onscroll = () => {
+    scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  };
+</script>
+<!-- Volunteer Form Modal -->
+<div class="modal" id="volunteerModal">
+<h3>Join as a Volunteer</h3>
+<input placeholder="Your Name" type="text"/>
+<input placeholder="Email" type="email"/>
+<textarea placeholder="Why do you want to join?"></textarea>
+<button onclick="alert('Thanks for joining!'); toggleModal('volunteerModal')">Submit</button>
+</div>
+<!-- Contact Modal -->
+<div class="modal" id="contactModal">
+<h3>Contact Us</h3>
+<input placeholder="Your Name" type="text"/>
+<input placeholder="Email" type="email"/>
+<textarea placeholder="Your message..."></textarea>
+<button onclick="alert('Message sent!'); toggleModal('contactModal')">Send</button>
+</div>
+<!-- Testimonial Section -->
+<section id="testimonial" style="background-color:#f0fff4; padding: 40px 20px; text-align: center;">
+<h2 style="color:#2f855a;">🌱 What Our Youth Say</h2>
+<blockquote style="font-style: italic; font-size: 1.2em; color: #333; max-width: 700px; margin: 20px auto;">
+    “Being part of Youth Eco Lead changed my life. I never thought planting one tree could make me feel so powerful.”
+  </blockquote>
+<p style="color: #4a5568; font-weight: bold;">— Anne Kariuki, Communications Lead</p>
+<!-- Inspirational Quote Insert for Green Journals -->
+<div style="background-color: #f0fff4; padding: 20px; margin: 30px auto; border-left: 5px solid #38a169; font-style: italic; max-width: 800px;">
+<h3 style="color: #2f855a;">🌱 Reflections on Ideas</h3>
+<ul style="padding-left: 20px;">
+<li>“All great things start as a simple thought — planted, watered, and believed in.”</li>
+<li>“Ideas are like seeds. You bury them in the soil of effort, and they bloom in the garden of change.”</li>
+<li>“A single idea, when rooted in purpose, becomes a forest of change.” — Giftson Lewis Situma</li>
+<li>“One idea can light up a thousand minds.”</li>
+<li>“You can’t plant an idea and expect it to grow if you’re not willing to get your hands dirty.”</li>
+</ul>
+</div>
+</section>
+<!-- Impact Section -->
+<!-- Final Impact Section -->
+<!-- Green Journal Section -->
+<section id="green-journal" style="padding: 40px 20px; background-color: #f0fff4;">
+<h2 style="color: #2f855a; text-align: center;">📖 Green Journals</h2>
+<article style="margin-bottom: 30px;">
+<h3 style="color: #2f855a;">My First Tree</h3>
+<small><strong>By:</strong> Giftson Lewis Situma | <strong>Date:</strong> July 3, 2025</small>
+<p>The ground was soft from the morning dew. I knelt, seedling in hand, and for a second I just stared at it. This wasn’t just a plant — it was a promise. A promise to protect, to nourish, and to grow. When I stood back up, my shirt was muddy, but my soul felt clean.</p>
+</article>
+<article style="margin-bottom: 30px;">
+<h3 style="color: #2f855a;">A Forest of Friends</h3>
+<small><strong>By:</strong> Anne Kariuki | <strong>Date:</strong> July 10, 2025</small>
+<p>At Matuu Primary, we planted 50 seedlings. I watched children name their trees — ‘Hope’, ‘Mama’, ‘Victory’. Some even hugged them. It reminded me that climate action isn’t just about science. It’s about love, roots, and belonging.</p>
+</article>
+<article style="margin-bottom: 30px;">
+<h3 style="color: #2f855a;">Trash, But Make It Art</h3>
+<small><strong>By:</strong> Jacinta Wayua | <strong>Date:</strong> July 15, 2025</small>
+<p>We collected over 30 plastic bottles at our local river clean-up. Instead of dumping them, we built an art piece shaped like Africa. It’s now hanging in our youth centre. Who knew waste could carry a message?</p>
+</article>
+<article style="margin-bottom: 30px;">
+<h3 style="color: #2f855a;">Lessons from the Soil</h3>
+<small><strong>By:</strong> George Omondi | <strong>Date:</strong> July 5, 2025</small>
+<p>The soil teaches you patience. You dig, you plant, but it’s the waiting — the watering — that makes the tree grow. Sometimes I wonder: what if we treated people like we do seedlings? With daily care and quiet faith?</p>
+</article>
+<article style="margin-bottom: 30px;">
+<h3 style="color: #2f855a;">Greener Tomorrows</h3>
+<small><strong>By:</strong> Juma Munga | <strong>Date:</strong> July 12, 2025</small>
+<p>The sun was relentless that day, but we kept going — 15 trees in 2 hours. As we left the site, one young girl ran up to say, ‘Thank you for giving my future some shade.’ I nearly cried. That’s why we do this.</p>
+</article>
+<article style="margin-bottom: 30px;">
+<h3 style="color: #2f855a;">Counting Trees, Not Just Coins</h3>
+<small><strong>By:</strong> Mr. Samson Ambenje | <strong>Date:</strong> July 9, 2025</small>
+<p>As a finance person, I’m used to counting money, budgets, receipts. But these past few months, I’ve found myself counting trees — and lives touched. Every seedling we plant is a line item of hope. Youth Eco Lead isn’t an expense. It’s an investment in life.</p>
+</article>
+</section>
+<!-- Eco Hero Story PDF Download Section -->
+<section id="eco-hero-story" style="padding: 40px 20px; background-color: #f0fff4;">
+<h2 style="color: #2f855a; text-align: center;">📘 Eco Stories: The Journey of Amani</h2>
+<p style="max-width: 800px; margin: 0 auto; text-align: center;">
+    Relax your mind and draw inspiration from this short eco-hero story about a young girl’s promise to restore nature in Athi River.
+  </p>
+<div style="text-align: center; margin-top: 20px;">
+<a download="" href="Amani_Eco_Hero_Story.pdf" style="padding: 12px 24px; background-color: #2b6cb0; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
+      📥 Download PDF
+    </a>
+</div>
+</section>
+
+<!-- Membership Joining Form Section -->
+<section id="membership-form" style="padding: 40px 20px; background-color: #e6fffa;">
+<h2 style="text-align: center; color: #2f855a;">🌿 Join Youth Eco Lead</h2>
+<form style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+<input placeholder="Full Name" required="" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="text"/>
+<input placeholder="Email" required="" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="email"/>
+<input placeholder="Phone Number" required="" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="tel"/>
+<input placeholder="Age" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="number"/>
+<input placeholder="County / Location" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="text"/>
+<textarea placeholder="Why do you want to join?" rows="3" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;"></textarea>
+<label><strong>Areas of Interest:</strong></label>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<label><input type="checkbox"/> Tree Planting</label>
+<label><input type="checkbox"/> Cleanups</label>
+<label><input type="checkbox"/> Environmental Education</label>
+<label><input type="checkbox"/> Social Media &amp; Advocacy</label>
+</div>
+<button style="padding: 12px; background-color: #38a169; color: white; border: none; border-radius: 5px; font-weight: bold;" type="submit">
+      Join Now
+    </button>
+</form>
+</section>
+<!-- Additional Testimonial -->
+<!-- Team Leader Testimonial -->
+<section id="testimonial-leader" style="background-color:#e6fffa; padding: 40px 20px; text-align: center;">
+<h2 style="color:#2f855a;">💬 From Our Team Leader</h2>
+<blockquote style="font-style: italic; font-size: 1.2em; color: #333; max-width: 800px; margin: 20px auto;">
+    “We started with a seed of an idea — Youth Eco Lead.<br/><br/>
+    Today, it's a growing forest of:<br/>
+    🌳 Planted trees<br/>
+    🙋 Mobilized youth<br/>
+    📖 Echoing stories<br/>
+    🌐 A powerful digital presence<br/><br/>
+    But more than that — it’s a vision of belonging to the Earth.<br/>
+    Not just reacting to climate change.<br/>
+    But reimagining a greener tomorrow led by the voices of today.”
+  </blockquote>
+<p style="color: #2f855a; font-weight: bold;">— Giftson Lewis Situma, Team Leader</p>
+</section>
+<!-- Additional Partner Testimonials -->
+<section id="partner-testimonials" style="background-color:#f0fff4; padding: 40px 20px; text-align: center;">
+<h2 style="color:#2f855a;">💬 What Our Partners Say</h2>
+<blockquote style="font-style: italic; font-size: 1.1em; color: #333; max-width: 800px; margin: 20px auto;">
+    “Youth Eco Lead is a shining example of youth-driven environmental stewardship. Their initiatives have transformed public spaces and inspired communities across Machakos County.”  
+  </blockquote>
+<p style="color: #4a5568; font-weight: bold;">— County Government of Machakos</p>
+<blockquote style="font-style: italic; font-size: 1.1em; color: #333; max-width: 800px; margin: 30px auto;">
+    “This generation holds the power to heal our ecosystems. Youth Eco Lead is proof that when young people are empowered, they don’t just participate — they lead.”  
+  </blockquote>
+<p style="color: #4a5568; font-weight: bold;">— Government of Kenya</p>
+<blockquote style="font-style: italic; font-size: 1.1em; color: #333; max-width: 800px; margin: 30px auto;">
+    “We recognize Youth Eco Lead for aligning grassroots efforts with global goals. Their work echoes the principles of sustainability, climate resilience, and education — pillars of the UNEP mission.”  
+  </blockquote>
+<p style="color: #4a5568; font-weight: bold;">— United Nations Environment Programme (UNEP)</p>
+</section>
+<!-- Detailed Campaign Section -->
+<section class="section" data-aos="fade-up" id="campaigns" style="background-color: #f0fff4; padding: 40px 20px;">
+<h2 style="text-align: center; color: #2f855a;">🚀 Our Current Campaigns</h2>
+<div style="max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+<h3 style="color: #2f855a;">🌱 Greening Schools Initiative</h3>
+<p style="font-size: 16px;">Youth Eco Lead is mobilizing volunteers to green 50 schools in <strong>Athi River</strong>. Through this initiative, we aim to plant over 5,000 trees, empower school eco-clubs, and inspire a generation of environmental stewards. Each school will receive trees, climate education, and a youth-led activation day.</p>
+<ul style="line-height: 1.8;">
+<li>🎯 <strong>Target Schools:</strong> 50</li>
+<li>🌳 <strong>Trees to Plant:</strong> 5,000</li>
+<li>🙋 <strong>Youth Volunteers Needed:</strong> 100+</li>
+<li>📅 <strong>Duration:</strong> July – December 2025</li>
+</ul>
+<p><strong>📍 Location:</strong> Athi River, Kenya</p>
+<div style="text-align:center; margin-top: 20px;">
+<a href="#campaign-form" style="padding: 12px 24px; background-color: #38a169; color: white; border: none; border-radius: 6px; text-decoration: none; font-weight: bold;">Join the Campaign</a>
+</div>
+</div>
+</section>
+<!-- Campaign Signup Form Section -->
+<section id="campaign-form" style="padding: 40px 20px; background-color: #e6fffa;">
+<h2 style="text-align: center; color: #2f855a;">🙋 Join the Campaign</h2>
+<form style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+<input placeholder="Full Name" required="" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="text"/>
+<input placeholder="Email Address" required="" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="email"/>
+<input placeholder="Phone Number" required="" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="tel"/>
+<input placeholder="School or Organization (if any)" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;" type="text"/>
+<textarea placeholder="Why do you want to join this campaign?" rows="3" style="padding: 10px; border-radius: 5px; border: 1px solid #c6f6d5;"></textarea>
+<button style="padding: 12px; background-color: #38a169; color: white; border: none; border-radius: 5px; font-weight: bold;" type="submit">
+      Submit
+    </button>
+</form>
+</section>
+
+</head></html>
